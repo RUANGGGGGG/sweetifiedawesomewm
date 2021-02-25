@@ -29,7 +29,7 @@ require("awful.hotkeys_popup.keys")
 naughty.connect_signal("request::display_error", function(message, startup)
     naughty.notification {
         urgency = "critical",
-        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
+        title   = "Oops, something bad has gone down:("..(startup and " during startup!" or "!"),
         message = message
     }
 end)
@@ -42,8 +42,8 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- @DOC_DEFAULT_APPLICATIONS@
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm"
-editor = os.getenv("EDITOR") or "nano"
+terminal = "xfce4-terminal"
+editor = os.getenv("EDITOR") or "micro"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -58,6 +58,7 @@ modkey = "Mod4"
 -- @DOC_MENU@
 -- Create a launcher widget and a main menu
 myawesomemenu = {
+   { "update", terminal .. "sudo pacman -Syu" },
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
